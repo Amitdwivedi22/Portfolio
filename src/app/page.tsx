@@ -80,7 +80,7 @@ function FormComponent() {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-200 mb-2">
             Name *
           </label>
           <input
@@ -95,7 +95,7 @@ function FormComponent() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-200 mb-2">
             Email *
           </label>
           <input
@@ -110,7 +110,7 @@ function FormComponent() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-200 mb-2">
             Subject *
           </label>
           <input
@@ -125,7 +125,7 @@ function FormComponent() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-200 mb-2">
             Message *
           </label>
           <textarea
@@ -154,10 +154,22 @@ function FormComponent() {
 export default function Home() {
   const [currentSection, setCurrentSection] = useState('home');
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
     setIsLoaded(true);
   }, []);
+
+  const handleSectionChange = (section: string) => {
+    if (section !== currentSection) {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setCurrentSection(section);
+        setIsTransitioning(false);
+      }, 500); // Match animation duration
+    }
+  };
 
   const skills = [
     { name: 'Next.js', level: 90, category: 'Frontend' },
@@ -210,42 +222,73 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
-        <div className="w-full h-full relative">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-gray-900/90 backdrop-blur-md  border-gray-600 pb-1">
+        <div className="w-full h-20 relative ">
           <Squares
             direction="right"
             speed={0.1}
-            borderColor="#e5e7eb"
+            borderColor="#4b5563"
             squareSize={20}
-            hoverFillColor="#f3f4f6"
+            hoverFillColor="#374151"
           />
-          <div className="absolute inset-0 z-10 bg-white/20 backdrop-blur-sm">
+          <div className="absolute inset-0 z-10 bg-gray-900/20 backdrop-blur-sm">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-              <div className="flex justify-between items-center h-16">
+              <div className="flex justify-between items-center h-20 pt-2">
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="text-xl font-bold gradient-text"
+                  className="flex items-center space-x-2"
                 >
-                  Amit Kumar Dwivedi
+                  <span className="text-2xl">👨‍💻</span>
+                  <span className="text-2xl font-extrabold gradient-text">Amit Kumar Dwivedi</span>
                 </motion.div>
                 <div className="hidden md:flex space-x-1">
                   {['home', 'about', 'skills', 'projects', 'contact'].map((section) => (
                     <button
                       key={section}
-                      onClick={() => setCurrentSection(section)}
-                      className={`nav-link ${currentSection === section ? 'active' : ''}`}
+                      onClick={() => handleSectionChange(section)}
+                      className={`nav-link ${currentSection === section ? 'active' : ''} font-bold text-white hover:text-gray-300 transition-colors duration-200 px-4 py-2 rounded-lg`}
                     >
                       {section.charAt(0).toUpperCase() + section.slice(1)}
                     </button>
                   ))}
                 </div>
                 <div className="md:hidden">
-                  <button className="p-2">
+                  <button
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    className="p-2 text-white font-bold"
+                  >
                     <span className="sr-only">Menu</span>
-                    ☰
+                    {isMobileMenuOpen ? '✕' : '☰'}
                   </button>
                 </div>
+
+                {/* Mobile Menu */}
+                {isMobileMenuOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    className="md:hidden absolute top-full left-0 right-0 bg-gray-900/95 backdrop-blur-md border-t border-gray-600"
+                  >
+                    <div className="px-4 py-4 space-y-2">
+                      {['home', 'about', 'skills', 'projects', 'contact'].map((section) => (
+                        <button
+                          key={section}
+                          onClick={() => {
+                            handleSectionChange(section);
+                            setIsMobileMenuOpen(false);
+                          }}
+                          className={`block w-full text-left px-4 py-2 rounded-lg font-bold text-white hover:bg-gray-700 transition-colors duration-200 ${
+                            currentSection === section ? 'bg-gray-700' : ''
+                          }`}
+                        >
+                          {section.charAt(0).toUpperCase() + section.slice(1)}
+                        </button>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
               </div>
             </div>
           </div>
@@ -254,7 +297,16 @@ export default function Home() {
 
       {/* Main Content */}
       <div className="pt-16">
-        <AnimatePresence mode="wait">
+        {isTransitioning && (
+          <div className="fixed inset-0 z-50 bg-gray-900 flex items-center justify-center">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-400 mx-auto mb-4"></div>
+              <p className="text-white text-lg">Loading...</p>
+            </div>
+          </div>
+        )}
+        <div className="relative" style={{ backgroundColor: '#111827' }}>
+          <AnimatePresence mode="wait">
           {currentSection === 'home' && (
             <motion.section
               key="home"
@@ -283,8 +335,8 @@ export default function Home() {
                     transition={{ delay: 0.2 }}
                     className="mb-8"
                   >
-                    <div className="w-32 h-32 mx-auto mb-8 rounded-full gradient-bg flex items-center justify-center text-6xl">
-                      👨‍💻
+                    <div className="w-32 h-32 mx-auto mb-8 rounded-full gradient-bg flex items-center justify-center">
+                      <span className="dev-icon-3d">👨‍💻</span>
                     </div>
                   </motion.div>
                   
@@ -301,7 +353,7 @@ export default function Home() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
-                    className="text-xl md:text-2xl text-gray-300 mb-8 typing-text"
+                    className="text-xl md:text-2xl text-gray-200 mb-8 typing-text"
                   >
                     Full Stack Developer & MERN Specialist
                   </motion.div>
@@ -310,10 +362,9 @@ export default function Home() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
-                    className="text-lg text-gray-400 mb-12 max-w-2xl mx-auto"
+                    className="text-base text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed text-center px-4"
                   >
-                    Passionate about creating beautiful, functional web applications with modern technologies.
-                    Based in Bengaluru, India. Available for exciting opportunities.
+                    As a Full-Stack Developer, I enjoy turning complex problems into simple, user-friendly solutions. I build fast, scalable web applications that blend performance with great design to create lasting impact.
                   </motion.div>
                   
                   <motion.div
@@ -322,13 +373,13 @@ export default function Home() {
                     transition={{ delay: 0.6 }}
                     className="flex flex-wrap justify-center gap-4"
                   >
-                    <a href="mailto:adwivedi08340@gmail.com" className="modern-btn">
+                    <a href="mailto:adwivedi08340@gmail.com" className="modern-btn btn-3d">
                       📧 Get In Touch
                     </a>
-                    <a target= "_blank" href="tel:+919695690501" className="modern-btn-outline">
+                    <a target= "_blank" href="tel:+919695690501" className="modern-btn-outline btn-3d">
                       📞 Call Me
                     </a>
-                    <a target="_blank" href="https://drive.google.com/file/d/1i6NBTj5-Y-EDK73lPkHKWAa4NLMhsBv9/view?usp=sharing" className="modern-btn-outline">
+                    <a target="_blank" href="https://drive.google.com/file/d/1i6NBTj5-Y-EDK73lPkHKWAa4NLMhsBv9/view?usp=sharing" className="modern-btn-outline btn-3d">
                       📄 Resume
                     </a>
                   </motion.div>
@@ -376,7 +427,7 @@ export default function Home() {
                   hoverFillColor="#333"
                 />
               </div>
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-12 pb-20 md:pt-20 md:pb-20">
                 <motion.h2
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -390,7 +441,7 @@ export default function Home() {
                     initial={{ opacity: 0, x: -30 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700"
+                    className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700 card-3d"
                   >
                     <h3 className="text-2xl font-bold mb-6 text-white">🎓 Education</h3>
                     <div className="space-y-6">
@@ -425,7 +476,7 @@ export default function Home() {
                     transition={{ delay: 0.4 }}
                     className="space-y-8"
                   >
-                    <div className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700">
+                    <div className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700 card-3d">
                       <h3 className="text-2xl font-bold mb-6 text-white">💼 Work Experience</h3>
                       <div className="border-l-4 border-pink-400 pl-6">
                         <h4 className="text-lg font-semibold text-white">R&D Developer</h4>
@@ -439,24 +490,24 @@ export default function Home() {
                       </div>
                     </div>
 
-                    <div className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700">
+                    <div className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700 card-3d">
                       <h3 className="text-2xl font-bold mb-6 text-white">🏆 Achievements</h3>
                       <div className="grid grid-cols-2 gap-4">
                         <div className="text-center p-4 bg-gray-700/50 rounded-lg border border-gray-600">
                           <div className="text-2xl font-bold text-blue-400">3</div>
-                          <div className="text-sm text-gray-300">Hackathons</div>
+                          <div className="text-sm text-gray-200">Hackathons</div>
                         </div>
                         <div className="text-center p-4 bg-gray-700/50 rounded-lg border border-gray-600">
                           <div className="text-2xl font-bold text-purple-400">4</div>
-                          <div className="text-sm text-gray-300">Projects</div>
+                          <div className="text-sm text-gray-200">Projects</div>
                         </div>
                         <div className="text-center p-4 bg-gray-700/50 rounded-lg border border-gray-600">
                           <div className="text-2xl font-bold text-cyan-400">2</div>
-                          <div className="text-sm text-gray-300">Years Coding</div>
+                          <div className="text-sm text-gray-200">Years Coding</div>
                         </div>
                         <div className="text-center p-4 bg-gray-700/50 rounded-lg border border-gray-600">
                           <div className="text-2xl font-bold text-pink-400">8.91</div>
-                          <div className="text-sm text-gray-300">CGPA</div>
+                          <div className="text-sm text-gray-200">CGPA</div>
                         </div>
                       </div>
                     </div>
@@ -498,7 +549,7 @@ export default function Home() {
                     initial={{ opacity: 0, x: -30 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700"
+                    className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700 card-3d"
                   >
                     <h3 className="text-2xl font-bold mb-8 text-white">Technical Skills</h3>
                     <div className="space-y-6">
@@ -533,37 +584,37 @@ export default function Home() {
                     transition={{ delay: 0.4 }}
                     className="space-y-8"
                   >
-                    <div className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700">
-                      <h3 className="text-2xl font-bold mb-6 text-white">Tech Stack</h3>
+                    <div className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700 card-3d">
+                      <h3 className="text-2xl font-bold mb-6 text-white text-3d">Tech Stack</h3>
                       <div className="grid grid-cols-2 gap-4">
                         <div className="text-center p-6 bg-gray-700/50 rounded-lg border border-gray-600">
                           <div className="text-3xl mb-2">⚛️</div>
                           <h4 className="font-bold text-white">Frontend</h4>
-                          <p className="text-sm text-gray-300 font-medium">React, Next.js, Tailwind CSS</p>
+                          <p className="text-sm text-gray-200 font-medium">React, Next.js, Tailwind CSS</p>
                         </div>
                         <div className="text-center p-6 bg-gray-700/50 rounded-lg border border-gray-600">
                           <div className="text-3xl mb-2">🚀</div>
                           <h4 className="font-bold text-white">Backend</h4>
-                          <p className="text-sm text-gray-300 font-medium">Node.js, Express.js</p>
+                          <p className="text-sm text-gray-200 font-medium">Node.js, Express.js</p>
                         </div>
                         <div className="text-center p-6 bg-gray-700/50 rounded-lg border border-gray-600">
                           <div className="text-3xl mb-2">🗄️</div>
                           <h4 className="font-bold text-white">Database</h4>
-                          <p className="text-sm text-gray-300 font-medium">MongoDB, PostgreSQL</p>
+                          <p className="text-sm text-gray-200 font-medium">MongoDB, PostgreSQL</p>
                         </div>
                         <div className="text-center p-6 bg-gray-700/50 rounded-lg border border-gray-600">
                           <div className="text-3xl mb-2">🛠️</div>
                           <h4 className="font-bold text-white">Tools</h4>
-                          <p className="text-sm text-gray-300 font-medium">Git, AWS, Linux</p>
+                          <p className="text-sm text-gray-200 font-medium">Git, AWS, Linux</p>
                         </div>
                       </div>
                     </div>
 
-                    <div className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700">
-                      <h3 className="text-2xl font-bold mb-6 text-white">Languages</h3>
+                    <div className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700 card-3d">
+                      <h3 className="text-2xl font-bold mb-6 text-white text-3d">Languages</h3>
                       <div className="flex flex-wrap gap-2">
-                        <span className="skill-tag">English (Fluent)</span>
-                        <span className="skill-tag">Hindi (Native)</span>
+                        <span className="skill-tag skill-tag-3d">English (Fluent)</span>
+                        <span className="skill-tag skill-tag-3d">Hindi (Native)</span>
                       </div>
                     </div>
                   </motion.div>
@@ -606,7 +657,7 @@ export default function Home() {
                       initial={{ opacity: 0, y: 30 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.2 }}
-                      className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700 group"
+                      className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700 group project-card-3d"
                     >
                       <div className="flex items-start justify-between mb-4">
                         <div className="text-4xl">{project.image}</div>
@@ -618,7 +669,7 @@ export default function Home() {
                       </div>
 
                       <h3 className="text-xl font-bold text-white mb-3">{project.title}</h3>
-                      <p className="text-gray-300 mb-4">{project.description}</p>
+                      <p className="text-gray-200 mb-4">{project.description}</p>
 
                       <div className="flex flex-wrap gap-2 mb-6">
                         {project.tech.map((tech) => (
@@ -627,10 +678,10 @@ export default function Home() {
                       </div>
 
                       <div className="flex space-x-3">
-                        <a target='_blank' href={project.github_link} className="bg-gray-700/50 hover:bg-gray-600/50 border border-gray-600 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex-1 text-center font-medium">
+                        <a target='_blank' href={project.github_link} className="bg-gray-700/50 hover:bg-gray-600/50 border border-gray-600 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex-1 text-center font-medium btn-3d">
                           🔗 View Code
                         </a>
-                        <a target='_blank' href={project.live_link} className="bg-blue-600/80 hover:bg-blue-500/80 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex-1 text-center font-medium">
+                        <a target='_blank' href={project.live_link} className="bg-blue-600/80 hover:bg-blue-500/80 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex-1 text-center font-medium btn-3d">
                           🚀 Live Demo
                         </a>
                       </div>
@@ -644,8 +695,8 @@ export default function Home() {
                   transition={{ delay: 0.8 }}
                   className="text-center mt-12"
                 >
-                  <p className="text-gray-300 mb-6 font-medium">Want to see more of my work?</p>
-                  <button className="bg-blue-600/80 hover:bg-blue-500/80 text-white px-8 py-3 rounded-lg font-bold transition-colors duration-200">
+                  <p className="text-gray-200 mb-6 font-medium">Want to see more of my work?</p>
+                  <button className="bg-blue-600/80 hover:bg-blue-500/80 text-white px-8 py-3 rounded-lg font-bold transition-colors duration-200 btn-3d">
                     🔗 View All Projects on GitHub
                   </button>
                 </motion.div>
@@ -694,8 +745,8 @@ export default function Home() {
                           📧
                         </div>
                         <div>
-                          <p className="font-bold text-white">Email</p>
-                          <a href="mailto:adwivedi08340@gmail.com" className="text-blue-400 hover:text-blue-300 font-medium">
+                          <p className="font-bold text-white text-lg">Email</p>
+                          <a href="mailto:adwivedi08340@gmail.com" className="text-blue-400 hover:text-blue-300 font-medium text-base">
                             adwivedi08340@gmail.com
                           </a>
                         </div>
@@ -706,8 +757,8 @@ export default function Home() {
                           📞
                         </div>
                         <div>
-                          <p className="font-bold text-white">Phone</p>
-                          <a href="tel:+919695690501" className="text-green-400 hover:text-green-300 font-medium">
+                          <p className="font-bold text-white text-lg">Phone</p>
+                          <a href="tel:+919695690501" className="text-green-400 hover:text-green-300 font-medium text-base">
                             +91 9695690501
                           </a>
                         </div>
@@ -718,8 +769,8 @@ export default function Home() {
                           📍
                         </div>
                         <div>
-                          <p className="font-bold text-white">Location</p>
-                          <p className="text-gray-300">Bengaluru, India</p>
+                          <p className="font-bold text-white text-lg">Location</p>
+                          <p className="text-gray-200 text-base">Bengaluru, India</p>
                         </div>
                       </div>
                     </div>
@@ -737,7 +788,7 @@ export default function Home() {
 
                     <div className="mt-8">
                       <a target="_blank" href="https://drive.google.com/file/d/1i6NBTj5-Y-EDK73lPkHKWAa4NLMhsBv9/view?usp=sharing">
-                        <button className="bg-blue-600/80 hover:bg-blue-500/80 text-white px-8 py-3 rounded-lg font-bold transition-colors duration-200 w-full">
+                        <button className="bg-blue-600/80 hover:bg-blue-500/80 text-white px-8 py-3 rounded-lg font-bold transition-colors duration-200 w-full btn-3d">
                           📄 Download Resume
                         </button>
                       </a>
@@ -748,7 +799,7 @@ export default function Home() {
                     initial={{ opacity: 0, x: 30 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.4 }}
-                    className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700"
+                    className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700 card-3d"
                   >
                     <h3 className="text-2xl font-bold mb-8 text-white">Send Message</h3>
                     <FormComponent />
@@ -757,38 +808,31 @@ export default function Home() {
               </div>
             </motion.section>
           )}
-        </AnimatePresence>
+          </AnimatePresence>
+        </div>
       </div>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
+      <footer className="bg-gray-900 text-white py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <div className="text-2xl font-bold gradient-text mb-4">
+            <div className="text-lg font-bold gradient-text mb-2">
               Amit Kumar Dwivedi
             </div>
-            <p className="text-gray-400 mb-6">
+            <p className="text-gray-300 mb-3 text-xs">
               Full Stack Developer specializing in MERN stack
             </p>
-            <div className="flex justify-center space-x-6 mb-8">
+            <div className="flex justify-center space-x-3">
               {socialLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.url}
-                  className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors"
+                  className="w-7 h-7 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors text-xs"
                   title={link.name}
                 >
                   {link.icon}
                 </a>
               ))}
-            </div>
-            <div className="border-t border-gray-800 pt-8">
-              <p className="text-gray-400 text-sm">
-                © 2025 Amit Kumar Dwivedi. All rights reserved.
-              </p>
-              <p className="text-gray-500 text-xs mt-2">
-                Built with Next.js, Tailwind CSS & Framer Motion
-              </p>
             </div>
           </div>
         </div>
