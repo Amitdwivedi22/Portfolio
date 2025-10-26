@@ -374,7 +374,7 @@ export default function Home() {
                     <a target= "_blank" href="tel:+919695690501" className="modern-btn-outline btn-3d">
                       📞 Call Me
                     </a>
-                    <a target="_blank" href="https://drive.google.com/file/d/1i6NBTj5-Y-EDK73lPkHKWAa4NLMhsBv9/view?usp=sharing" className="modern-btn-outline btn-3d">
+                    <a target="_blank" href="https://drive.google.com/file/d/1NvfPkrJjv8ligVX3vlcCb_DTcmlwOYcb/view?usp=sharing" className="modern-btn-outline btn-3d">
                       📄 Resume
                     </a>
                   </motion.div>
@@ -782,7 +782,7 @@ export default function Home() {
                     </div>
 
                     <div className="mt-8">
-                      <a target="_blank" href="https://drive.google.com/file/d/1i6NBTj5-Y-EDK73lPkHKWAa4NLMhsBv9/view?usp=sharing">
+                      <a target="_blank" href="https://drive.google.com/file/d/1NvfPkrJjv8ligVX3vlcCb_DTcmlwOYcb/view?usp=sharing">
                         <button className="bg-blue-600/80 hover:bg-blue-500/80 text-white px-8 py-3 rounded-lg font-bold transition-colors duration-200 w-full btn-3d">
                           📄 Download Resume
                         </button>
