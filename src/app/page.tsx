@@ -1,8 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { li } from 'framer-motion/client';
 import Squares from '../components/Squares';
 
 function FormComponent() {
@@ -153,13 +152,9 @@ function FormComponent() {
 
 export default function Home() {
   const [currentSection, setCurrentSection] = useState('home');
-  const [isLoaded, setIsLoaded] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
 
   const handleSectionChange = (section: string) => {
     if (section !== currentSection) {
@@ -346,7 +341,7 @@ export default function Home() {
                     transition={{ delay: 0.3 }}
                     className="text-5xl md:text-7xl font-bold text-white mb-6"
                   >
-                    Hi, I'm <span className="gradient-text">Amit</span>
+                    Hi, I&#39;m <span className="gradient-text">Amit</span>
                   </motion.h1>
 
                   <motion.div
@@ -568,8 +563,8 @@ export default function Home() {
                           <div className="progress-container">
                             <motion.div
                               className="progress-fill"
-                              initial={{ width: 0 }}
-                              animate={{ width: `${skill.level}%` }}
+                              initial={{ inlineSize: 0 }}
+                              animate={{ inlineSize: `${skill.level}%` }}
                               transition={{ duration: 1, delay: 0.5 + index * 0.05 }}
                             />
                           </div>
@@ -728,7 +723,7 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0 }}
                   className="text-4xl md:text-5xl font-bold text-center mb-16 text-white"
                 >
-                  Let's Work Together
+                  Let&#39;s Work Together
                 </motion.h2>
 
                 <div className="grid lg:grid-cols-2 gap-12">
