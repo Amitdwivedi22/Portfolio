@@ -691,9 +691,9 @@ export default function Home() {
                   className="text-center mt-12"
                 >
                   <p className="text-gray-200 mb-6 font-medium">Want to see more of my work?</p>
-                  <button className="bg-blue-600/80 hover:bg-blue-500/80 text-white px-8 py-3 rounded-lg font-bold transition-colors duration-200 btn-3d">
+                  <a target="_blank" href="https://github.com/Amitdwivedi22?tab=repositories" className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3 rounded-lg font-bold transition-colors duration-200 inline-block text-center">
                     🔗 View All Projects on GitHub
-                  </button>
+                  </a>
                 </motion.div>
               </div>
             </motion.section>
