@@ -374,7 +374,7 @@ export default function Home() {
                     <a target= "_blank" href="tel:+919695690501" className="modern-btn-outline btn-3d">
                       📞 Call Me
                     </a>
-                    <a target="_blank" href="https://drive.google.com/file/d/1NvfPkrJjv8ligVX3vlcCb_DTcmlwOYcb/view?usp=sharing" className="modern-btn-outline btn-3d">
+                    <a target="_blank" href="https://drive.google.com/drive/folders/1d_PsXjscNkovyCKa1lJFTiiLdQlvtswk?usp=sharing" className="modern-btn-outline btn-3d">
                       📄 Resume
                     </a>
                   </motion.div>
@@ -473,6 +473,16 @@ export default function Home() {
                   >
                     <div className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700 card-3d">
                       <h3 className="text-2xl font-bold mb-6 text-white">💼 Work Experience</h3>
+                      <div className="border-l-4 border-blue-400 pl-6 mb-6">
+                        <h4 className="text-lg font-semibold text-white">Backend Engineer Intern</h4>
+                        <p className="text-gray-300">Athira <span className="text-sm text-gray-400">(U.S.-based)</span></p>
+                        <p className="text-sm text-gray-400">3 months</p>
+                        <ul className="text-sm text-gray-300 mt-2 space-y-1">
+                          <li>• Worked on backend development and contributed to implementing an AI-powered web scraping feature</li>
+                          <li>• Proposed the feature to the founders and helped take the idea from discussion to working implementation</li>
+                        </ul>
+                      </div>
+
                       <div className="border-l-4 border-pink-400 pl-6">
                         <h4 className="text-lg font-semibold text-white">R&D Developer</h4>
                         <p className="text-gray-300">Nexathread</p>
@@ -782,7 +792,7 @@ export default function Home() {
                     </div>
 
                     <div className="mt-8">
-                      <a target="_blank" href="https://drive.google.com/file/d/1NvfPkrJjv8ligVX3vlcCb_DTcmlwOYcb/view?usp=sharing">
+                      <a target="_blank" href="https://drive.google.com/drive/folders/1d_PsXjscNkovyCKa1lJFTiiLdQlvtswk?usp=sharing">
                         <button className="bg-blue-600/80 hover:bg-blue-500/80 text-white px-8 py-3 rounded-lg font-bold transition-colors duration-200 w-full btn-3d">
                           📄 Download Resume
                         </button>
