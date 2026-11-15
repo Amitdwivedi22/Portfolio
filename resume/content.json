@@ -1,0 +1,46 @@
+{
+  "name": "Amit Kumar Dwivedi",
+  "positioning": "Backend / Full-Stack / Software Engineer",
+  "contacts": [
+    {"label": "adwivedi08340@gmail.com", "href": "mailto:adwivedi08340@gmail.com"},
+    {"label": "+91 9695690501", "href": "tel:+919695690501"},
+    {"label": "GitHub: Amitdwivedi22", "href": "https://github.com/Amitdwivedi22"},
+    {"label": "LinkedIn: Amit Kumar Dwivedi", "href": "https://www.linkedin.com/in/amit-kumar-dwivedi-9b1789233"}
+  ],
+  "experience": [
+    {"organization": "Athira", "role": "Backend Engineer Intern (AI)", "dates": "Mar 2026 - May 2026", "bullets": [
+      "Developed and maintained backend services and REST APIs for AI-powered applications.",
+      "Built web scraping and data processing pipelines; collaborated with engineers on backend features."
+    ]},
+    {"organization": "Nexathread", "role": "Research & Development Intern", "dates": "Feb 2025 - Apr 2025", "bullets": [
+      "Developed responsive web interfaces using React and Tailwind CSS.",
+      "Researched technical trends and competitors; prepared reports to support product and business decisions."
+    ]}
+  ],
+  "education": [
+    {"institution": "Jain University", "dates": "Expected 2027", "degree": "B.Tech in Cloud Computing & Information Security"},
+    {"institution": "AEIP Gadag", "dates": "Aug 2021 - Aug 2024", "degree": "Diploma in Computer Science Engineering"}
+  ],
+  "projects": [
+    {"name": "RetinaGrade", "stack": "Next.js, TypeScript, Prisma, SQLite, Sharp", "bullets": [
+      "Built account-scoped image and analysis-record workflows with private uploads, validation, search, status filters and pagination.",
+      "Implemented ownership checks and PDF record summaries. Research prototype: model inference is not connected."
+    ]},
+    {"name": "Engineering Portfolio", "href": "https://github.com/Amitdwivedi22/Portfolio", "stack": "Next.js, React, TypeScript, Tailwind CSS", "bullets": [
+      "Built typed project content, reusable components and native section navigation with keyboard-focus and reduced-motion support.",
+      "Validated static output with ESLint, TypeScript, production builds and generated HTML checks."
+    ]}
+  ],
+  "contributions": [
+    {"label": "openSUSE / DocBuild - PR #705 (Merged)", "href": "https://github.com/openSUSE/docbuild/pull/705", "detail": "Added Python/Pytest tests for manifest metadata projection, missing files and invalid-schema error handling."},
+    {"label": "openSUSE / DocBuild - PR #747 (Open PR)", "href": "https://github.com/openSUSE/docbuild/pull/747", "detail": "Added sitemap progress callbacks, Rich terminal updates and regression tests; disabled animation for non-interactive output."},
+    {"label": "Nextcloud / Approval - PR #399 (Merged)", "href": "https://github.com/nextcloud/approval/pull/399", "detail": "Added PHP service validation to prevent approval requests for files already approved under the same rule."}
+  ],
+  "skills": [
+    {"label": "Languages", "items": "TypeScript, JavaScript, Python, Java"},
+    {"label": "Frontend", "items": "React, Next.js, Tailwind CSS"},
+    {"label": "Backend", "items": "Node.js, Express, REST APIs, JWT authentication"},
+    {"label": "Data", "items": "MongoDB, MySQL, SQLite, Prisma"},
+    {"label": "Tools & Testing", "items": "Git, GitHub, Pytest, ESLint, TypeScript compiler"}
+  ]
+}
