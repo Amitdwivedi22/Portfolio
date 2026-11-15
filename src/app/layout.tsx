@@ -1,31 +1,43 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
+import { profile } from "@/content/portfolio";
 
-// Load your fonts properly using next/font/google
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const fraunces = Fraunces({
   subsets: ["latin"],
-  variable: "--font-jetbrains-mono",
+  variable: "--font-fraunces",
+  style: ["normal", "italic"],
   display: "swap",
+  preload: false,
 });
 
+const pageTitle = `${profile.name} | ${profile.positioning}`;
+const description = `${profile.name}: Software Engineer in ${profile.locations}, open-source contributor to openSUSE DocBuild, and B.Tech student at ${profile.university}, graduating in ${profile.graduation}.`;
+
 export const metadata: Metadata = {
-  title: "Amit Kumar Dwivedi - Full Stack Developer",
-  description:
-    "Portfolio of Amit Kumar Dwivedi, a Full Stack Developer specializing in MERN stack with expertise in Next.js, React, Node.js, and modern web technologies.",
+  title: pageTitle,
+  description,
   keywords:
-    "Full Stack Developer, MERN Stack, Next.js, React, Node.js, TypeScript, Portfolio, GTA Theme",
-  authors: [{ name: "Amit Kumar Dwivedi" }],
+    "Amit Kumar Dwivedi, Software Engineer, Bengaluru, Next.js, TypeScript, Python",
+  authors: [{ name: profile.name }],
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    siteName: profile.name,
+    title: pageTitle,
+    description,
+  },
+  twitter: { card: "summary", title: pageTitle, description },
 };
 
 export const viewport = {
-  'inline-size': "device-width",
+  width: "device-width",
   initialScale: 1,
 };
 
@@ -35,7 +47,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={`${inter.variable} ${fraunces.variable}`}>
       <body className="antialiased">{children}</body>
     </html>
   );
